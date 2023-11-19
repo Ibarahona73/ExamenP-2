@@ -10,7 +10,7 @@ public class RestApiMethods {
     public static final String PostRouting = "CreateContact.php";
     public static final String GetRouting = "ListContact.php";
 
-    // Endpoint
+    //Endpoint
 
     public static final String  EndpointPost = "http://"  + ipadress + separador + RestApi + separador + PostRouting;
     public static final String  EndpointGet = "http://"  + ipadress + separador + RestApi + separador + GetRouting;
