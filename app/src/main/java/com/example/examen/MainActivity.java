@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.location.Location;
 import android.location.LocationListener;
+import android.util.Log;
 import android.widget.MediaController;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -24,7 +25,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.card.MaterialCardView;
 
@@ -225,5 +230,27 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+
+        // Crear una solicitud JSON para enviar al servidor
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, SERVER_URL, postData,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // Manejar la respuesta del servidor (si es necesario)
+                        Log.d("Response", response.toString());
+                        Toast.makeText(MainActivity.this, "Datos enviados con éxito", Toast.LENGTH_SHORT).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // Manejar errores de la solicitud
+                        Log.e("Error", "Error en la solicitud al servidor: " + error.toString());
+                        Toast.makeText(MainActivity.this, "Error al enviar datos", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            // Agregar la solicitud a la cola de solicitudes
+        requestQueue.add(jsonObjectRequest);
     }
 }
