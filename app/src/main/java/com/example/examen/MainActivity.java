@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.location.Location;
@@ -20,6 +21,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.google.android.material.card.MaterialCardView;
@@ -31,11 +33,13 @@ public class MainActivity extends AppCompatActivity {
     private LocationManager locationManager;
 
     private Button btnCaptureVideo;
+    private Button Save;
     private MaterialCardView cardViewPreview;
     private EditText editTextName;
     private EditText editTextPhone;
     private EditText editTextLatitud;
     private EditText editTextLongitud;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
+        Save = findViewById(R.id.btnSave);
         btnCaptureVideo = findViewById(R.id.btnCaptureVideo);
         cardViewPreview = findViewById(R.id.cardViewPreview);
         editTextName = findViewById(R.id.editTextName);
@@ -57,6 +61,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 checkPermissionsAndCaptureVideo();
+
+            }
+        });
+
+        Save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
 
             }
         });
@@ -93,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
             VideoView videoView = findViewById(R.id.videoViewPreview);
             videoView.setVideoURI(videoUri);
 
+
             // Añadir controles de reproducción al VideoView
             MediaController mediaController = new MediaController(this);
             videoView.setMediaController(mediaController);
@@ -104,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -112,29 +126,6 @@ public class MainActivity extends AppCompatActivity {
                 captureVideo();
             }
         }
-    }
-
-    // Agrega métodos para manejar la ubicación y mostrar alertas según tus necesidades
-
-    // Ejemplo de cómo verificar si el GPS está activado
-    private boolean isGpsEnabled() {
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        return locationManager != null && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-    }
-
-    // Ejemplo de cómo mostrar una alerta
-    private void showGpsAlert() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("GPS no está activo")
-                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Puedes realizar alguna acción si el usuario acepta
-                    }
-                })
-                .setNegativeButton("Cancelar", null)
-                .create()
-                .show();
     }
 
 
@@ -158,10 +149,13 @@ public class MainActivity extends AppCompatActivity {
             }
 
         } else {
+
             // Solicitar permisos de ubicación si no están otorgados
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_LOCATION_PERMISSION);
+
+            }
         }
-    }
+
 
     // LocationListener para manejar una única actualización de ubicación
     private final LocationListener singleLocationListener = new LocationListener() {
