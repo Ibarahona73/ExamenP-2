@@ -127,6 +127,15 @@ public class MainActivity extends AppCompatActivity {
 
             // Iniciar la reproducción del video
             videoView.start();
+
+            // Obtener los otros datos del formulario
+            String nombre = editTextName.getText().toString();
+            String telefono = editTextPhone.getText().toString();
+            String latitud = editTextLatitud.getText().toString();
+            String longitud = editTextLongitud.getText().toString();
+
+            // Enviar datos al servidor
+            sendDataToServer(nombre, telefono, latitud, longitud, videoUri.toString());
         }
     }
 
