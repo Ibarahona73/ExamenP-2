@@ -296,5 +296,14 @@ public class MainActivity extends AppCompatActivity {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         requestQueue.add(jsonObjectRequest);
+
+        //Enviar los datos al adaptador del ListView
+        Intent intent = new Intent(MainActivity.this, Listado.class);
+        intent.putExtra("nombre", nombre);
+        intent.putExtra("telefono", telefono);
+        intent.putExtra("latitud", latitud);
+        intent.putExtra("longitud", longitud);
+        intent.putExtra("videoBase64", videoBase64);
+        startActivity(intent);
     }
 }

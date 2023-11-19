@@ -95,6 +95,18 @@
         android:layout_marginTop="44dp"
         android:text="Salvar" />
 
+    <Button
+        android:id="@+id/Listar"
+        android:layout_width="112dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextLongi"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="255dp"
+        android:layout_marginTop="46dp"
+        android:layout_marginEnd="44dp"
+        android:text="Listar" />
+
     <!-- Agrega más campos según tus necesidades -->
 
 </RelativeLayout>
