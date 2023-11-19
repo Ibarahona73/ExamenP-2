@@ -27,7 +27,8 @@
         <VideoView
             android:id="@+id/videoViewPreview"
             android:layout_width="match_parent"
-            android:layout_height="200dp" />
+            android:layout_height="200dp"
+            />
 
 
         <!-- Otros elementos en el CardView si es necesario -->
@@ -84,6 +85,15 @@
         android:enabled="false"
         android:hint="Longitud"
         android:inputType="numberDecimal" />
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextLongi"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="30dp"
+        android:text="Salvar" />
 
     <!-- Agrega más campos según tus necesidades -->
 
