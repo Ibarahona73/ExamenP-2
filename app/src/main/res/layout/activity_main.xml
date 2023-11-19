@@ -68,7 +68,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:ems="10"
-        android:enabled="false"
+        android:enabled="true"
         android:hint="Latitud"
         android:inputType="numberDecimal" />
 
@@ -82,7 +82,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:ems="10"
-        android:enabled="false"
+        android:enabled="true"
         android:hint="Longitud"
         android:inputType="numberDecimal" />
 

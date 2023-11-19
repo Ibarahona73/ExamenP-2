@@ -1,14 +1,11 @@
 package com.example.examen;
 
+import android.util.Base64;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.location.Location;
 import android.location.LocationListener;
 import android.util.Log;
@@ -24,7 +21,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.VideoView;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -32,16 +28,17 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.card.MaterialCardView;
-
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_VIDEO_CAPTURE = 101;
     private static final int REQUEST_LOCATION_PERMISSION = 102;
     private LocationManager locationManager;
-
     private Button btnCaptureVideo;
     private Button Save;
     private MaterialCardView cardViewPreview;
@@ -51,12 +48,15 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextLongitud;
     private static final String SERVER_URL = RestApiMethods.EndpointPost;
     private RequestQueue requestQueue;
+    private String videoBase64;
+    private VideoView videoView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        String videoUrl = "http://tu_servidor.com/videos/video1.mp4";
         // Inicializar la cola de solicitudes Volley
         requestQueue = Volley.newRequestQueue(this);
 
@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         editTextPhone = findViewById(R.id.editTextPhone);
         editTextLongitud = findViewById(R.id.editTextLongi);
         editTextLatitud = findViewById(R.id.editTextLatid);
+        videoView = findViewById(R.id.videoViewPreview);
 
         getLocation();
 
@@ -83,8 +84,19 @@ public class MainActivity extends AppCompatActivity {
         Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Obtener los datos del formulario
+                String nombre = editTextName.getText().toString();
+                String telefono = editTextPhone.getText().toString();
+                String latitud = editTextLatitud.getText().toString();
+                String longitud = editTextLongitud.getText().toString();
 
-
+                // Validar que se hayan ingresado los datos necesarios
+                if (nombre.isEmpty() || telefono.isEmpty() || latitud.isEmpty() || longitud.isEmpty() || videoBase64 == null) {
+                    Toast.makeText(MainActivity.this, "Completa todos los campos y captura un video", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Enviar datos al servidor
+                    sendDataToServer(nombre, telefono, latitud, longitud, videoBase64);
+                }
             }
         });
     }
@@ -105,38 +117,52 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+
+    private String convertVideoToBase64(Uri videoUri) {
+        try {
+            InputStream inputStream = getContentResolver().openInputStream(videoUri);
+            byte[] bytes;
+            if (inputStream != null) {
+                bytes = new byte[inputStream.available()];
+                inputStream.read(bytes);
+                inputStream.close();
+
+                // Convertir a base64
+                byte[] base64Bytes = Base64.encode(bytes, Base64.DEFAULT);
+                return new String(base64Bytes);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
-            // Obtener la URI del video capturado
             Uri videoUri = data.getData();
 
-            // Mostrar la vista previa del video en el CardView
-            cardViewPreview.setVisibility(View.VISIBLE);
+            // Convertir el video a base64
+            videoBase64 = convertVideoToBase64(videoUri);
 
-            // Mostrar el video en un VideoView dentro del CardView
-            VideoView videoView = findViewById(R.id.videoViewPreview);
-            videoView.setVideoURI(videoUri);
-
-
-            // Añadir controles de reproducción al VideoView
-            MediaController mediaController = new MediaController(this);
-            videoView.setMediaController(mediaController);
-
-            // Iniciar la reproducción del video
-            videoView.start();
-
-            // Obtener los otros datos del formulario
-            String nombre = editTextName.getText().toString();
-            String telefono = editTextPhone.getText().toString();
-            String latitud = editTextLatitud.getText().toString();
-            String longitud = editTextLongitud.getText().toString();
-
-            // Enviar datos al servidor
-            sendDataToServer(nombre, telefono, latitud, longitud, videoUri.toString());
+            // Mostrar la vista previa del video
+            showVideoPreview(videoUri);
         }
+    }
+
+    private void showVideoPreview(Uri videoUri) {
+        videoView.setVisibility(View.VISIBLE);
+        videoView.setVideoURI(videoUri);
+
+        // Añadir controles de reproducción al VideoView
+        MediaController mediaController = new MediaController(this);
+        videoView.setMediaController(mediaController);
+
+        // Iniciar la reproducción del video
+        videoView.start();
     }
 
 
@@ -227,25 +253,22 @@ public class MainActivity extends AppCompatActivity {
 
     //Enviar datos al Servidor
 
-    private void sendDataToServer(String nombre, String telefono, String latitud, String longitud, String videoUri) {
+    private void sendDataToServer(String nombre, String telefono, String latitud, String longitud, String videoBase64) {
         JSONObject postData = new JSONObject();
         try {
             postData.put("nombre", nombre);
             postData.put("telefono", telefono);
             postData.put("latitud", latitud);
             postData.put("longitud", longitud);
-            postData.put("video", videoUri);
+            postData.put("video", videoBase64);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-
-        // Crear una solicitud JSON para enviar al servidor
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, SERVER_URL, postData,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        // Manejar la respuesta del servidor (si es necesario)
                         Log.d("Response", response.toString());
                         Toast.makeText(MainActivity.this, "Datos enviados con éxito", Toast.LENGTH_SHORT).show();
                     }
@@ -253,13 +276,11 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // Manejar errores de la solicitud
                         Log.e("Error", "Error en la solicitud al servidor: " + error.toString());
                         Toast.makeText(MainActivity.this, "Error al enviar datos", Toast.LENGTH_SHORT).show();
                     }
                 });
 
-            // Agregar la solicitud a la cola de solicitudes
         requestQueue.add(jsonObjectRequest);
     }
 }
