@@ -24,7 +24,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.card.MaterialCardView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,12 +44,17 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextPhone;
     private EditText editTextLatitud;
     private EditText editTextLongitud;
-
+    private static final String SERVER_URL = RestApiMethods.EndpointPost;
+    private RequestQueue requestQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Inicializar la cola de solicitudes Volley
+        requestQueue = Volley.newRequestQueue(this);
+
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Save = findViewById(R.id.btnSave);
@@ -116,8 +126,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -154,8 +162,8 @@ public class MainActivity extends AppCompatActivity {
             // Solicitar permisos de ubicación si no están otorgados
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_LOCATION_PERMISSION);
 
-            }
         }
+    }
 
 
     // LocationListener para manejar una única actualización de ubicación
@@ -203,4 +211,19 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    //Enviar datos al Servidor
+
+    private void sendDataToServer(String nombre, String telefono, String latitud, String longitud, String videoUri) {
+        JSONObject postData = new JSONObject();
+        try {
+            postData.put("nombre", nombre);
+            postData.put("telefono", telefono);
+            postData.put("latitud", latitud);
+            postData.put("longitud", longitud);
+            postData.put("video", videoUri);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
