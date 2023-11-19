@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String videoUrl = "http://tu_servidor.com/videos/video1.mp4";
         // Inicializar la cola de solicitudes Volley
         requestQueue = Volley.newRequestQueue(this);
 
