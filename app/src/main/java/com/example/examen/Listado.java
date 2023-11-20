@@ -38,7 +38,7 @@ public class Listado extends AppCompatActivity {
         dataList.add("Teléfono: " + telefono);
         dataList.add("Latitud: " + latitud);
         dataList.add("Longitud: " + longitud);
-        dataList.add("VideoBase64: " + videoBase64);
+        dataList.add("Video Base64: " + videoBase64);
 
         // Crear un ArrayAdapter y configurarlo en el ListView
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, dataList);
