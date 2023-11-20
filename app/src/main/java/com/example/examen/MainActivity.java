@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 String longitud = editTextLongitud.getText().toString();
 
                 // Validar que se hayan ingresado los datos necesarios
-                if (nombre.isEmpty() || telefono.isEmpty() || latitud.isEmpty() || longitud.isEmpty() || videoBase64 == null) {
+                if (nombre.isEmpty() || telefono.isEmpty() || latitud.isEmpty() || longitud.isEmpty() /*|| videoBase64 == null*/) {
                     Toast.makeText(MainActivity.this, "Completa todos los campos y captura un video", Toast.LENGTH_SHORT).show();
                 } else {
                     // Enviar datos al servidor
@@ -295,7 +295,6 @@ public class MainActivity extends AppCompatActivity {
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-        requestQueue.add(jsonObjectRequest);
 
         //Enviar los datos al adaptador del ListView
         Intent intent = new Intent(MainActivity.this, Listado.class);
@@ -305,5 +304,8 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("longitud", longitud);
         intent.putExtra("videoBase64", videoBase64);
         startActivity(intent);
+
+        requestQueue.add(jsonObjectRequest);
+
     }
 }
