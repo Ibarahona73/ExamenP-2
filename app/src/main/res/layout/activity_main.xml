@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/btnCaptureVideo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cardViewPreview"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="136dp"
+        android:text="Capturar Video" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardViewPreview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp">
+
+        <VideoView
+            android:id="@+id/videoViewPreview"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            />
+
+
+        <!-- Otros elementos en el CardView si es necesario -->
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <EditText
+        android:id="@+id/editTextName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnCaptureVideo"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:hint="Nombre" />
+
+    <EditText
+        android:id="@+id/editTextPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editTextName"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:hint="Teléfono"
+        android:inputType="phone" />
+
+    <EditText
+        android:id="@+id/editTextLatid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextPhone"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:ems="10"
+        android:enabled="true"
+        android:hint="Latitud"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/editTextLongi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextLatid"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:ems="10"
+        android:enabled="true"
+        android:hint="Longitud"
+        android:inputType="numberDecimal" />
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextLongi"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="44dp"
+        android:text="Salvar" />
+
+    <Button
+        android:id="@+id/Listar"
+        android:layout_width="112dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextLongi"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="255dp"
+        android:layout_marginTop="46dp"
+        android:layout_marginEnd="44dp"
+        android:text="Listar" />
+
+    <!-- Agrega más campos según tus necesidades -->
+
+</RelativeLayout>
