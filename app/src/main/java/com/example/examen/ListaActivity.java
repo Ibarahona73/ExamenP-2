@@ -97,7 +97,6 @@ public class ListaActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialogInterface, int i) {
                             RequestQueue queue = Volley.newRequestQueue(ListaActivity.this);
                             //--->>String a la APiDelete falta no esta en metodos
-
                             String url = RestApiMethods.DeleteRouting + idCont;
 
                             StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url, new Response.Listener<String>() {

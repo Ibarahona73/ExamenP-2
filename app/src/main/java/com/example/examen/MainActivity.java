@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 String longitud = editTextLongitud.getText().toString();
 
                 // Validar que se hayan ingresado los datos necesarios
+
                 if (nombre.isEmpty() || telefono.isEmpty() || latitud.isEmpty() || longitud.isEmpty() /*|| videoBase64 == null*/) {
                     Toast.makeText(MainActivity.this, "Completa todos los campos y captura un video", Toast.LENGTH_SHORT).show();
                 } else {
@@ -103,6 +104,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //VERIFICACION DE PERMISOS DE VIDEO Y AUDIO
+
     private void checkPermissionsAndCaptureVideo() {
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED ||
                 ContextCompat.checkSelfPermission(this, android.Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
@@ -112,6 +115,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //CAPTURA DE VIDEO Y AUDIO
+
     private void captureVideo() {
         Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
         if (takeVideoIntent.resolveActivity(getPackageManager()) != null) {
@@ -119,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
+    //CONVERSION DE VIDEO A BASE64
 
     private String convertVideoToBase64(Uri videoUri) {
         try {
@@ -154,6 +159,8 @@ public class MainActivity extends AppCompatActivity {
             showVideoPreview(videoUri);
         }
     }
+
+    //Mostrar la previa del video
 
     private void showVideoPreview(Uri videoUri) {
         videoView.setVisibility(View.VISIBLE);
@@ -209,6 +216,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     // LocationListener para manejar una única actualización de ubicación
+
+
     private final LocationListener singleLocationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
