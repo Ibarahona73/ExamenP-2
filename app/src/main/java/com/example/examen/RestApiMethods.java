@@ -5,9 +5,7 @@ public class RestApiMethods {
     //http://localhost/PM01/CreatePerson.php
 
     public static final String separador = "/";
-    public static final String ipadress = "grupo3pm1.atwebpages.com"; //cambiar por su ip
-
-    //public static final String ipadress = "108.181.157.246";
+    public static final String ipadress = "grupo3pm1.atwebpages.com";
     public static final String RestApi = "api";
     public static final String PostRouting = "create.php";
     public static final String GetRouting = "get.php";
