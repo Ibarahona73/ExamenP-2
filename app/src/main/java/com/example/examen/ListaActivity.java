@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 public class ListaActivity extends AppCompatActivity {
     private Button btnBack, btnDelete, btnUpdate;
 
+    private TextView idCont;
     private ListView listContactos;
     private int valSelected=-1;
 
@@ -37,6 +39,8 @@ public class ListaActivity extends AppCompatActivity {
         btnDelete = findViewById(R.id.btnDelete);
         btnUpdate = findViewById(R.id.btnUpdate);
         btnBack = findViewById(R.id.btnAtras);
+        idCont = findViewById(R.id.txtBuscar);
+
 
         String nombre = intent.getStringExtra("name");
         String telefono = intent.getStringExtra("phone");
@@ -67,7 +71,7 @@ public class ListaActivity extends AppCompatActivity {
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                eliminarContacto();
 
             }
         });
@@ -82,7 +86,7 @@ public class ListaActivity extends AppCompatActivity {
 
     //Se Planeaba hacer un modal que tomara el id que ingresara el usuario y mediante la sentencia php hacer un delete mediante el ID
 
-    /*
+
     private void eliminarContacto() {
         if(idCont != null) {
             new AlertDialog.Builder(this)
@@ -94,7 +98,7 @@ public class ListaActivity extends AppCompatActivity {
                             RequestQueue queue = Volley.newRequestQueue(ListaActivity.this);
                             //--->>String a la APiDelete falta no esta en metodos
 
-                            String url = RestApiMethods.ApiDeleteUrl + idCont;
+                            String url = RestApiMethods.DeleteRouting + idCont;
 
                             StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url, new Response.Listener<String>() {
                                 @Override
@@ -121,7 +125,7 @@ public class ListaActivity extends AppCompatActivity {
                     }).show();
         }
     }
-    */
+
 
 
     //Alerta de confirmacion
