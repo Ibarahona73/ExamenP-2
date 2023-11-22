@@ -37,11 +37,12 @@ public class ListaActivity extends AppCompatActivity {
         btnDelete = findViewById(R.id.btnDelete);
         btnUpdate = findViewById(R.id.btnUpdate);
         btnBack = findViewById(R.id.btnAtras);
-        String nombre = intent.getStringExtra("nombre");
-        String telefono = intent.getStringExtra("telefono");
-        String latitud = intent.getStringExtra("latitud");
-        String longitud = intent.getStringExtra("longitud");
-        String videoBase64 = intent.getStringExtra("videoBase64");
+
+        String nombre = intent.getStringExtra("name");
+        String telefono = intent.getStringExtra("phone");
+        String latitud = intent.getStringExtra("latitude");
+        String longitud = intent.getStringExtra("longitude");
+        String videoBase64 = intent.getStringExtra("video");
 
         // Crear un ArrayList para almacenar los datos
         ArrayList<String> dataList = new ArrayList<>();

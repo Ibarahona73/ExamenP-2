@@ -27,9 +27,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCY-MZAPAdixdvi1gvBnicKuTiXSvggiF0"/>
         <activity
-            android:name=".Listado"
-            android:exported="false" />
-        <activity
             android:name=".ListaActivity"
             android:exported="false" />
         <activity

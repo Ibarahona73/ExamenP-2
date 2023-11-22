@@ -258,10 +258,10 @@ public class MainActivity extends AppCompatActivity {
     private void sendDataToServer(String nombre, String telefono, String latitud, String longitud, String videoBase64) {
         JSONObject postData = new JSONObject();
         try {
-            postData.put("nombre", nombre);
-            postData.put("telefono", telefono);
-            postData.put("latitud", latitud);
-            postData.put("longitud", longitud);
+            postData.put("name", nombre);
+            postData.put("phone", telefono);
+            postData.put("latitude", latitud);
+            postData.put("longitude", longitud);
             postData.put("video", videoBase64);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -299,11 +299,11 @@ public class MainActivity extends AppCompatActivity {
 
         //Enviar los datos al adaptador del ListView
         Intent intent = new Intent(MainActivity.this, ListaActivity.class);
-        intent.putExtra("nombre", nombre);
-        intent.putExtra("telefono", telefono);
-        intent.putExtra("latitud", latitud);
-        intent.putExtra("longitud", longitud);
-        intent.putExtra("videoBase64", videoBase64);
+        intent.putExtra("name", nombre);
+        intent.putExtra("phone", telefono);
+        intent.putExtra("latitude", latitud);
+        intent.putExtra("longitude", longitud);
+        intent.putExtra("video", videoBase64);
         startActivity(intent);
 
         requestQueue.add(jsonObjectRequest);
